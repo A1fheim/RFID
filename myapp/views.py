@@ -6,8 +6,15 @@ from django.utils.timezone import now
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import TagEntry
+from .models import TagEntry, PeopleCounter
 from .serializers import TagEntrySerializer
+from django.db.models import F
+
+
+# Модель для хранения количества людей
+class PeopleCounter(models.Model):
+    count = models.IntegerField(default=0)
+
 
 # Класс для обработки POST-запросов с использованием Django REST Framework
 class TagEntryView(APIView):
@@ -29,17 +36,27 @@ class TagEntryView(APIView):
         
         # Создаем новую запись о входе
         new_entry = TagEntry.objects.create(tag_id=tag_id)
+
+        # Увеличиваем количество людей, если метка новая
+        PeopleCounter.objects.all().update(count=F('count') + 1)
+
+        # Получаем текущее количество людей
+        people_count = PeopleCounter.objects.first().count
+
         serializer = TagEntrySerializer(new_entry)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({'entry': serializer.data, 'people_count': people_count}, status=status.HTTP_201_CREATED)
+
 
 # Функция для отображения таблицы с данными из модели TagEntry
 def table_view(request):
     entries = TagEntry.objects.all()  # Получаем все записи из модели TagEntry
     return render(request, 'table.html', {'entries': entries})
 
+
 # Функция для отображения главной страницы
 def home(request):
     return render(request, 'home.html')
+
 
 # Функция для получения последней записи из модели
 def get_latest_entry(request):
@@ -50,7 +67,7 @@ def get_latest_entry(request):
             'entry_time': latest_entry.entry_time.strftime('%d/%m/%Y %H:%M:%S'),
             'exit_time': latest_entry.exit_time.strftime('%d/%m/%Y %H:%M:%S') if latest_entry.exit_time else '',
             'total_time': str(latest_entry.total_time) if latest_entry.total_time else '',
-            'people_count': latest_entry.people_count
+            'people_count': PeopleCounter.objects.first().count  # Получаем текущее количество людей
         }
         return JsonResponse(data)
     except TagEntry.DoesNotExist:

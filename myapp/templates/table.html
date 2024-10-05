@@ -22,6 +22,10 @@
     </style>
 </head>
 <body>
+
+    <!-- Отображение количества людей -->
+    <h3>Количество людей: <span id="people_count">0</span></h3>
+
     <table>
         <thead>
             <tr>
@@ -29,7 +33,6 @@
                 <th>Время входа</th>
                 <th>Время выхода</th>
                 <th>Суммарное время</th>
-                <th>Количество людей</th>
             </tr>
         </thead>
         <tbody>
@@ -39,11 +42,11 @@
                 <td>{{ entry.entry_time|date:"d/m/Y H:i:s" }}</td>
                 <td>{{ entry.exit_time|date:"d/m/Y H:i:s" }}</td>
                 <td>{{ entry.total_time }}</td>
-                <td>{{ entry.people_count }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         // Функция для обновления таблицы
@@ -52,6 +55,9 @@
                 url: "{% url 'get_latest_entry' %}",
                 type: "GET",
                 success: function(data) {
+                    // Обновляем количество людей
+                    $('#people_count').text(data.people_count);
+
                     // Проверяем, есть ли строка с таким же tag_id в таблице
                     var existingRow = $("table tbody tr").filter(function() {
                         return $(this).find("td:first").text() === data.tag_id;
@@ -62,7 +68,6 @@
                         existingRow.find("td:nth-child(2)").text(data.entry_time);
                         existingRow.find("td:nth-child(3)").text(data.exit_time);
                         existingRow.find("td:nth-child(4)").text(data.total_time);
-                        existingRow.find("td:nth-child(5)").text(data.people_count);
                     } else {
                         // Добавляем новую строку, если метка не найдена
                         var newRow = "<tr>" +
@@ -70,14 +75,13 @@
                             "<td>" + data.entry_time + "</td>" +
                             "<td>" + data.exit_time + "</td>" +
                             "<td>" + data.total_time + "</td>" +
-                            "<td>" + data.people_count + "</td>" +
                             "</tr>";
                         $("table tbody").append(newRow);
                     }
                 }
             });
         }
-    
+
         // Обновляем таблицу каждые 5 секунд
         setInterval(updateTable, 5000);  // Вызываем функцию обновления каждые 5 секунд
     </script>   

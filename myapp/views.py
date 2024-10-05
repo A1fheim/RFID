@@ -36,11 +36,24 @@ class TagEntryView(APIView):
         # Создаем новую запись о входе
         new_entry = TagEntry.objects.create(tag_id=tag_id)
 
-        # Проверяем количество уникальных меток
-        unique_tag_count = TagEntry.objects.values('tag_id').distinct().count()
+        # Проверяем, является ли метка новой
+        if not TagEntry.objects.filter(tag_id=tag_id).exists():
+            # Если метка новая, увеличиваем счётчик людей
+            people_counter = PeopleCounter.objects.first()
+            if not people_counter:
+                # Если запись отсутствует, создаём её с начальным значением 0
+                people_counter = PeopleCounter.objects.create(count=0)
+            
+            # Увеличиваем счётчик
+            people_counter.count = F('count') + 1
+            people_counter.save()
+
+        # Получаем текущее количество людей
+        people_count = PeopleCounter.objects.first().count
 
         serializer = TagEntrySerializer(new_entry)
-        return Response({'entry': serializer.data, 'people_count': unique_tag_count}, status=status.HTTP_201_CREATED)
+        return Response({'entry': serializer.data, 'people_count': people_count}, status=status.HTTP_201_CREATED)
+
 
 
 # Функция для отображения таблицы с данными из модели TagEntry

@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.home, name='home'),  # Главная страница
     path('get-latest-entry/', views.get_latest_entry, name='get_latest_entry'),
     path('api/rfid/', TagEntryView.as_view(), name='rfid_entry'),  # Только один маршрут для API
+    path('table/', views.table_view, name='table_view'),
 ]

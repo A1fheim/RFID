@@ -49,6 +49,10 @@ class TagEntryView(APIView):
         serializer = TagEntrySerializer(new_entry)
         return Response({'entry': serializer.data, 'people_count': people_count}, status=status.HTTP_201_CREATED)
 
+# Функция для отображения таблицы с данными из модели TagEntry
+def table_view(request):
+    entries = TagEntry.objects.all()  # Получаем все записи из модели TagEntry
+    return render(request, 'table.html', {'entries': entries})
 
 # Функция для получения последней записи из модели
 def get_latest_entry(request):

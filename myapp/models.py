@@ -8,3 +8,10 @@ class TagEntry(models.Model):
 
     def __str__(self):
         return f"Tag ID: {self.tag_id}, Entry: {self.entry_time}, Exit: {self.exit_time}"
+
+# Модель для хранения количества людей
+class PeopleCounter(models.Model):
+    count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"Количество людей: {self.count}"

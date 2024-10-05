@@ -10,11 +10,8 @@ from .models import TagEntry, PeopleCounter
 from .serializers import TagEntrySerializer
 from django.db.models import F
 
-
-# Модель для хранения количества людей
-class PeopleCounter(models.Model):
-    count = models.IntegerField(default=0)
-
+from django.shortcuts import render
+from .models import PeopleCounter  # Импортируем модель из models.py
 
 # Класс для обработки POST-запросов с использованием Django REST Framework
 class TagEntryView(APIView):

@@ -33,12 +33,11 @@ class TagEntryView(APIView):
             active_entry.save()
             return Response({'message': 'Exit recorded', 'total_time': active_entry.total_time}, status=status.HTTP_200_OK)
         
-        # Создаем новую запись о входе
-        new_entry = TagEntry.objects.create(tag_id=tag_id)
-
-        # Проверяем, является ли метка новой
+        # Проверяем, является ли метка новой (нет записей для данной метки)
         if not TagEntry.objects.filter(tag_id=tag_id).exists():
-            # Если метка новая, увеличиваем счётчик людей
+            # Если метка новая, создаем новую запись о входе и увеличиваем счётчик людей
+            new_entry = TagEntry.objects.create(tag_id=tag_id)
+
             people_counter = PeopleCounter.objects.first()
             if not people_counter:
                 # Если запись отсутствует, создаём её с начальным значением 0
@@ -48,11 +47,15 @@ class TagEntryView(APIView):
             people_counter.count = F('count') + 1
             people_counter.save()
 
-        # Получаем текущее количество людей
-        people_count = PeopleCounter.objects.first().count
+            # Получаем текущее количество людей
+            people_count = PeopleCounter.objects.first().count
+        else:
+            new_entry = TagEntry.objects.create(tag_id=tag_id)
+            people_count = PeopleCounter.objects.first().count
 
         serializer = TagEntrySerializer(new_entry)
         return Response({'entry': serializer.data, 'people_count': people_count}, status=status.HTTP_201_CREATED)
+
 
 
 

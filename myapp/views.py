@@ -15,6 +15,7 @@ from datetime import timedelta
 # Класс для обработки POST-запросов с использованием Django REST Framework
 
 
+# Класс для обработки POST-запросов с использованием Django REST Framework
 class TagEntryView(APIView):
     def post(self, request):
         tag_id = request.data.get('tag_id')
@@ -25,36 +26,21 @@ class TagEntryView(APIView):
         # Проверяем, есть ли активная запись (без времени выхода) для этой метки
         active_entry = TagEntry.objects.filter(tag_id=tag_id, exit_time__isnull=True).first()
 
-        # Новая проверка: если карта была сканирована недавно (например, в течение 10 секунд)
-        recent_entry = TagEntry.objects.filter(tag_id=tag_id, entry_time__gte=now()-timedelta(seconds=10)).first()
-        if recent_entry:
-            return Response({'message': 'Card recently scanned, not recorded again'}, status=status.HTTP_400_BAD_REQUEST)
-
         if active_entry:
             # Обновляем время выхода и считаем общее время
             active_entry.exit_time = now()
             active_entry.total_time = active_entry.exit_time - active_entry.entry_time
             active_entry.save()
             return Response({'message': 'Exit recorded', 'total_time': active_entry.total_time}, status=status.HTTP_200_OK)
-
+        
         # Создаем новую запись о входе
         new_entry = TagEntry.objects.create(tag_id=tag_id)
 
-        # Увеличиваем количество людей, если метка новая
-        people_counter = PeopleCounter.objects.first()
-        if not people_counter:
-            # Если запись отсутствует, создаём её с начальным значением 0
-            people_counter = PeopleCounter.objects.create(count=0)
-        
-        # Увеличиваем счётчик только для новой карты
-        people_counter.count = F('count') + 1
-        people_counter.save()
-
-        # Получаем текущее количество людей
-        people_count = PeopleCounter.objects.first().count
+        # Проверяем количество уникальных меток
+        unique_tag_count = TagEntry.objects.values('tag_id').distinct().count()
 
         serializer = TagEntrySerializer(new_entry)
-        return Response({'entry': serializer.data, 'people_count': people_count}, status=status.HTTP_201_CREATED)
+        return Response({'entry': serializer.data, 'people_count': unique_tag_count}, status=status.HTTP_201_CREATED)
 
 
 # Функция для отображения таблицы с данными из модели TagEntry

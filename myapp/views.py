@@ -54,6 +54,11 @@ def table_view(request):
     entries = TagEntry.objects.all()  # Получаем все записи из модели TagEntry
     return render(request, 'table.html', {'entries': entries})
 
+
+# Функция для отображения главной страницы
+def home(request):
+    return render(request, 'home.html')
+
 # Функция для получения последней записи из модели
 def get_latest_entry(request):
     try:

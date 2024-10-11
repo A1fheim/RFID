@@ -3,19 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Таблица</title>
+    <title>Таблица посещений</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f9;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f9;
+            color: white;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: linear-gradient(to bottom, #00416a, #2f80ed);
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+        }
+
+        .hero-section {
+            height: 200px;
+            background: linear-gradient(to bottom, #00416a, #e4e5e6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-section h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .content {
+            padding: 50px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
         h3 {
             color: #333;
             font-size: 20px;
             margin-bottom: 20px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -24,54 +85,90 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
+
         th, td {
             padding: 15px;
             text-align: left;
             border: 1px solid #ddd;
         }
+
         th {
             background-color: #f2f2f2;
             font-weight: bold;
             color: #555;
         }
+
         td {
             background-color: #fafafa;
             color: #444;
         }
+
         table tr:hover td {
             background-color: #f1f1f1;
         }
+
         #people_count {
             font-weight: bold;
             color: #007BFF;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #00416a;
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <!-- Отображение количества людей -->
-    <h3>Количество людей: <span id="people_count">0</span></h3>
+    <!-- Шапка сайта -->
+    <header>
+        <h1>Система посещений</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Главная</a></li>
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID Метки</th>
-                <th>Время входа</th>
-                <th>Время выхода</th>
-                <th>Суммарное время</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in entries %}
-            <tr>
-                <td>{{ entry.tag_id }}</td>
-                <td>{{ entry.entry_time|date:"d/m/Y H:i:s" }}</td>
-                <td>{{ entry.exit_time|date:"d/m/Y H:i:s" }}</td>
-                <td>{{ entry.total_time }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- Заголовок страницы -->
+    <section class="hero-section">
+        <h2>Таблица посещений</h2>
+    </section>
+
+    <!-- Контент с таблицей -->
+    <div class="content">
+        <h3>Количество людей: <span id="people_count">0</span></h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Метки</th>
+                    <th>Время входа</th>
+                    <th>Время выхода</th>
+                    <th>Суммарное время</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.tag_id }}</td>
+                    <td>{{ entry.entry_time|date:"d/m/Y H:i:s" }}</td>
+                    <td>{{ entry.exit_time|date:"d/m/Y H:i:s" }}</td>
+                    <td>{{ entry.total_time|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <p>&copy; 2024 Система посещений. Все права защищены.</p>
+    </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>

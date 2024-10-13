@@ -11,65 +11,65 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         html, body {
             height: 100%;
             display: flex;
             flex-direction: column;
         }
-
+        
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f7f9;
+            background-color: #DAD7CD;
             color: white;
             margin: 0;
         }
-
+        
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 50px;
-            background: linear-gradient(to bottom, #00416a, #2f80ed);
+            background: linear-gradient(to bottom, #344E41, #3A5A40);
         }
-
+        
         header h1 {
             font-size: 24px;
             font-weight: bold;
         }
-
+        
         nav ul {
             display: flex;
             list-style: none;
         }
-
+        
         nav ul li {
             margin-left: 30px;
         }
-
+        
         nav ul li a {
             text-decoration: none;
             color: white;
             font-weight: 500;
         }
-
+        
         .hero-section {
             height: 200px;
-            background: linear-gradient(to bottom, #00416a, #e4e5e6);
+            background: linear-gradient(to bottom, #3A5A40, #588157);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
         }
-
+        
         .hero-section h2 {
             font-size: 36px;
             margin-bottom: 10px;
             font-weight: 700;
             color: #ffffff;
         }
-
+        
         .content {
             padding: 50px;
             background-color: #fff;
@@ -79,13 +79,13 @@
             margin: 50px auto;
             flex: 1;
         }
-
+        
         h3 {
             color: #333;
             font-size: 20px;
             margin-bottom: 20px;
         }
-
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -94,42 +94,42 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-
+        
         th, td {
             padding: 15px;
             text-align: left;
             border: 1px solid #ddd;
         }
-
+        
         th {
             background-color: #f2f2f2;
             font-weight: bold;
             color: #555;
         }
-
+        
         td {
             background-color: #fafafa;
             color: #444;
         }
-
+        
         table tr:hover td {
             background-color: #f1f1f1;
         }
-
+        
         #people_count {
             font-weight: bold;
-            color: #007BFF;
+            color: #3A5A40;
         }
-
+        
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #00416a;
+            background-color: #3A5A40;
             color: white;
             margin-top: auto;
         }
-
-        /* Стили для модального окна */
+        
+        /* Общие стили для всех модальных окон */
         .modal {
             display: none;
             position: fixed;
@@ -140,42 +140,66 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
         }
-
+        
         .modal-content {
-            background-color: #fefefe;
+            background-color: white;
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
             max-width: 500px;
             border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-
-        .close {
-            color: #aaa;
+        
+        /* Стиль для текста внутри модальных окон */
+        .modal-content h2 {
+            color: #3A5A40;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .modal-content p {
+            color: black;
+            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        /* Стиль для ссылки */
+        .modal-content a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        /* Кнопка закрытия */
+        .modal-close {
+            color: grey;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-
-        .close:hover,
-        .close:focus {
-            color: black;
+        
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #3A5A40;
             text-decoration: none;
             cursor: pointer;
         }
+        
     </style>
 </head>
 <body>
 
     <!-- Шапка сайта -->
     <header>
-        <h1>Система посещений</h1>
+        <h1>EventHub</h1>
         <nav>
             <ul>
                 <li><a href="{% url 'home' %}">Главная</a></li>
-                <li><a href="#">О нас</a></li>
-                <li><a href="#">Контакты</a></li>
+                <li><a href="#" id="aboutLink">Команда</a></li>
+                <li><a href="#" id="openContactsBtn">Контакты</a></li>
             </ul>
         </nav>
     </header>
@@ -211,11 +235,11 @@
         </table>
     </div>
 
-    <!-- Модальное окно -->
+    <!-- Модальное окно "О нас" -->
     <div id="aboutModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>О нас</h2>
+            <span class="modal-close">&times;</span>
+            <h2>Команда</h2>
             <table class="onas-table">
                 <thead>
                     <tr>
@@ -241,34 +265,40 @@
         </div>
     </div>
 
+<!-- Модальное окно "Контакты" -->
+<div id="contactsModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Контакты</h2>
+        <p>Если у вас есть вопросы или вы хотите связаться с нами, пожалуйста, напишите на:</p>
+        <p><strong>Электронная почта:</strong> <a href="mailto:rfid@rfidproject.com">rfid@rfidproject.com</a></p>
+        <p><strong>Телефон:</strong> +7-988-517-08-07</p>
+    </div>
+</div>
+
     <!-- Подвал -->
     <footer>
-        <p>&copy; 2024 Система посещений. Все права защищены.</p>
+        <p>&copy; 2024 EventHub | Система посещений. Все права защищены.</p>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        // Функция для обновления таблицы
+        // Обновление таблицы каждые 2 секунды
         function updateTable() {
             $.ajax({
                 url: "{% url 'get_latest_entry' %}",
                 type: "GET",
                 success: function(data) {
-                    // Обновляем количество людей
                     $('#people_count').text(data.people_count);
-
-                    // Проверяем, есть ли строка с таким же tag_id в таблице
                     var existingRow = $("table tbody tr").filter(function() {
                         return $(this).find("td:first").text() === data.tag_id;
                     });
     
                     if (existingRow.length > 0) {
-                        // Обновляем существующую строку
                         existingRow.find("td:nth-child(2)").text(data.entry_time);
                         existingRow.find("td:nth-child(3)").text(data.exit_time);
                         existingRow.find("td:nth-child(4)").text(data.total_time);
                     } else {
-                        // Добавляем новую строку, если метка не найдена
                         var newRow = "<tr>" +
                             "<td>" + data.tag_id + "</td>" +
                             "<td>" + data.entry_time + "</td>" +
@@ -281,35 +311,52 @@
             });
         }
 
-        // Обновляем таблицу каждые 2 секунд
-        setInterval(updateTable, 2000);  // Вызываем функцию обновления каждые 5 секунд
+        setInterval(updateTable, 2000);
+// Функция для открытия любого модального окна
+function openModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = "block";
+}
 
-         // Получаем модальное окно
-    var modal = document.getElementById("aboutModal");
+// Функция для закрытия любого модального окна
+function closeModal(modalId) {
+    var modal = document.getElementById(modalId);
+    modal.style.display = "none";
+}
 
-    // Получаем ссылку "О нас" для открытия модального окна
-    var aboutLink = document.querySelector('nav ul li a[href="#"]');
+// Получаем элементы для окна "О нас" и "Контакты"
+var aboutLink = document.getElementById("aboutLink");
+var contactsLink = document.getElementById("openContactsBtn");
 
-    // Получаем элемент <span>, который закрывает модальное окно
-    var span = document.getElementsByClassName("close")[0];
+// Получаем все кнопки закрытия модальных окон
+var closeButtons = document.querySelectorAll(".modal-close");
 
-    // Открываем модальное окно при клике на "О нас"
-    aboutLink.onclick = function(event) {
-        event.preventDefault();
-        modal.style.display = "block";
-    }
+// Открытие окна "О нас"
+aboutLink.onclick = function(event) {
+    event.preventDefault();
+    openModal("aboutModal");
+}
 
-    // Закрываем модальное окно при клике на <span> (x)
-    span.onclick = function() {
+// Открытие окна "Контакты"
+contactsLink.onclick = function(event) {
+    event.preventDefault();
+    openModal("contactsModal");
+}
+
+// Закрытие окон при нажатии на кнопку закрытия
+closeButtons.forEach(function(button) {
+    button.onclick = function() {
+        var modal = this.closest(".modal");
         modal.style.display = "none";
     }
+});
 
-    // Закрываем модальное окно при клике в любую область вне окна
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+// Закрытие окон при клике вне их области
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
     }
-    </script>   
+}
+    </script>
 </body>
 </html>

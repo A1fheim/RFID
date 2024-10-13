@@ -173,7 +173,7 @@
         <h1>Система посещений</h1>
         <nav>
             <ul>
-                <li><a href="#">Главная</a></li>
+                <li><a href="/home">Главная</a></li>
                 <li><a href="#">О нас</a></li>
                 <li><a href="#">Контакты</a></li>
             </ul>
@@ -281,35 +281,35 @@
             });
         }
 
-        // Обновляем таблицу каждые 5 секунд
+        // Обновляем таблицу каждые 2 секунд
         setInterval(updateTable, 2000);  // Вызываем функцию обновления каждые 5 секунд
 
-        // Получаем модальное окно
-        var modal = document.getElementById("aboutModal");
+         // Получаем модальное окно
+    var modal = document.getElementById("aboutModal");
 
-        // Получаем ссылку "О нас" для открытия модального окна
-        var aboutLink = document.querySelector('nav ul li a[href="#"]');
+    // Получаем ссылку "О нас" для открытия модального окна
+    var aboutLink = document.querySelector('nav ul li a[href="#"]');
 
-        // Получаем элемент <span>, который закрывает модальное окно
-        var span = document.getElementsByClassName("close")[0];
+    // Получаем элемент <span>, который закрывает модальное окно
+    var span = document.getElementsByClassName("close")[0];
 
-        // Открываем модальное окно при клике на "О нас"
-        aboutLink.onclick = function(event) {
-            event.preventDefault();
-            modal.style.display = "block";
-        }
+    // Открываем модальное окно при клике на "О нас"
+    aboutLink.onclick = function(event) {
+        event.preventDefault();
+        modal.style.display = "block";
+    }
 
-        // Закрываем модальное окно при клике на <span> (x)
-        span.onclick = function() {
+    // Закрываем модальное окно при клике на <span> (x)
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Закрываем модальное окно при клике в любую область вне окна
+    window.onclick = function(event) {
+        if (event.target == modal) {
             modal.style.display = "none";
         }
-
-        // Закрываем модальное окно при клике в любую область вне окна
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+    }
     </script>   
 </body>
 </html>

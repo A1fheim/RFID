@@ -3,9 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
+    <title>Проект RFID-меток</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #001f3f;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            text-align: left;
+            border-bottom: 1px solid #0056b3;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 100px;
+            margin: 0 20px; 
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #002c5f;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #0056b3;
+        }
+
+        .button {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 24px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+    </style>
 </head>
 <body>
-    <h1>Добро пожаловать на главную страницу!</h1>
+
+<header>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3AsP5fjF48H83SNRFH-RC8naTP5qPRncoUQ&s" alt="RFID-метки" class="logo">
+    <h1>Проект разработки RFID-меток</h1>
+</header>
+
+<div class="container">
+    <section>
+        <h2>О проекте</h2>
+        <p>
+            При организации массовых мероприятий в формате "свободного общения" полезно 
+        знать, что больше всего заинтересовало посетителей. Где большую часть времени 
+        находились гости - какие посещали стенды и экспонаты, или же они не выходили из зоне 
+        кофе-брейка или фуршета? Такая аналитика поможет организаторам определить как 
+        наиболее популярные точки интереса мероприятия, так и общую активность и интерес 
+        посетителей к событию.
+        </p>
+    </section>
+
+    <section>
+        <h2>Цели проекта</h2>
+        <p> 
+            Наша цель - создать аппаратно-программный комплекс для отслеживания активности посетителей 
+            на основе RFID-меток. Система включает сканеры RFID-меток и программное обеспечение для 
+            сбора и обработки данных в реальном времени.</p>
+        <ul>
+            <li>1. Крепление RFID-меток к бейджам посетителей</li>
+            <li>2. Фиксация присутствия с помощью RFID-датчиков</li>
+            <li>3. Визуализация данных на веб-странице в реальном времени</li>
+        </ul>
+    </section>
+
+    <a href="https://rfid-cxta.onrender.com/table/" class="button">Перейти на сайт проекта</a>
+</div>
+
+<footer>
+    <p>&copy; 2024 Проект разработки RFID-меток</p>
+</footer>
+
 </body>
 </html>

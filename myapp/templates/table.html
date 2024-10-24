@@ -127,6 +127,9 @@
             background-color: #3A5A40;
             color: white;
             margin-top: auto;
+            width: 100%;
+            margin: 0;
+            max-width: none;  
         }
         
         /* Общие стили для всех модальных окон */
@@ -153,7 +156,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
-        /* Стиль для текста внутри модальных окон */
         .modal-content h2 {
             color: #3A5A40;
             margin-bottom: 15px;
@@ -167,13 +169,11 @@
             line-height: 1.6;
         }
         
-        /* Стиль для ссылки */
         .modal-content a {
             color: #007bff;
             text-decoration: none;
         }
         
-        /* Кнопка закрытия */
         .modal-close {
             color: grey;
             float: right;
@@ -186,6 +186,176 @@
             color: #3A5A40;
             text-decoration: none;
             cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            header {
+                display: flex;
+                justify-content: space-between; /* Разделяет элементы по сторонам */
+                align-items: center;
+                padding: 10px 20px;
+            }
+        
+            header h1 {
+                font-size: 20px;
+                margin-right: auto; /* Название остается слева */
+            }
+        
+            nav {
+                margin-left: auto; /* Меню остается справа */
+            }
+        
+            nav ul {
+                display: flex;
+                list-style: none;
+                padding-left: 0;
+                margin-left: 0;
+            }
+        
+            nav ul li {
+                margin-left: 15px; /* Уменьшаем расстояние между элементами на мобильных */
+            }
+            
+            .hero-section h2 {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 20px;
+                margin: 20px 10px;
+            }
+            
+            h3 {
+                font-size: 18px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            footer {
+                padding: 15px;
+                font-size: 14px;
+            }
+            
+            .modal-content {
+                width: 90%;
+                margin: 20% auto;
+            }
+        }
+        @media (max-width: 425px) {
+            header {
+                display: flex;
+                justify-content: space-between; /* Разделяет элементы по сторонам */
+                align-items: center;
+                padding: 10px 20px;
+            }
+        
+            header h1 {
+                font-size: 20px;
+                margin-right: auto; /* Название остается слева */
+            }
+        
+            nav {
+                margin-left: auto; /* Меню остается справа */
+            }
+        
+            nav ul {
+                display: flex;
+                list-style: none;
+                padding-left: 0;
+                margin-left: 0;
+            }
+        
+            nav ul li {
+                margin-left: 15px; /* Уменьшаем расстояние между элементами на мобильных */
+            }
+            .content {
+                overflow-x: auto;
+            }
+        
+            table {
+                width: 100%;
+                min-width: 600px; /* Ширина таблицы при маленьких экранах */
+            }
+        
+            th, td {
+                font-size: 12px; /* Меньший шрифт для лучшего умещения */
+            }
+        }
+        @media (max-width: 320px) {
+            header {
+                display: flex;
+                justify-content: space-between; /* Разделяет элементы по сторонам */
+                align-items: center;
+                padding: 10px;
+            }
+        
+            header h1 {
+                font-size: 18px;
+                margin-right: auto; /* Название остается слева */
+            }
+        
+            nav {
+                margin-left: auto; /* Меню остается справа */
+            }
+        
+            nav ul {
+                display: flex;
+                list-style: none;
+                padding-left: 0;
+                margin-left: 0;
+            }
+        
+            nav ul li {
+                margin-left: 10px; /* Уменьшаем расстояние между пунктами меню */
+                font-size: 14px;
+            }
+        
+            .hero-section h2 {
+                font-size: 22px;
+            }
+        
+            .content {
+                padding: 15px;
+                margin: 10px 5px;
+            }
+        
+            h3 {
+                font-size: 16px;
+            }
+        
+            table {
+                font-size: 12px;
+            }
+        
+            th, td {
+                padding: 8px;
+                font-size: 11px;
+            }
+        
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+        
+        @media (min-width: 425px) {
+            .content {
+                overflow-x: auto;
+            }
+        
+            table {
+                width: 100%;
+                min-width: 600px; /* Ширина таблицы при маленьких экранах */
+            }
+        
+            th, td {
+                font-size: 12px; /* Меньший шрифт для лучшего умещения */
+            }
         }
         
     </style>
